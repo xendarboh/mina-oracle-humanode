@@ -24,9 +24,6 @@ export default function Dashboard() {
           <Link to="/">home</Link>
         </li>
         <li>
-          <Link to="/posts">Posts</Link>
-        </li>
-        <li>
           <Link to="/login">Login</Link>
         </li>
         <li>
