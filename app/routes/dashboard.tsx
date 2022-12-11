@@ -3,14 +3,16 @@ import { Link } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 
 import { requireAuthenticatedUser } from "~/auth.server";
+import { getSignedAuth } from "~/mina.server";
 
 export async function loader({ request }: LoaderArgs) {
   const auth = await requireAuthenticatedUser(request);
-  return { auth };
+  const signedAuth = await getSignedAuth(1, auth.id);
+  return { auth, signedAuth };
 }
 
 export default function Dashboard() {
-  const { auth } = useLoaderData<typeof loader>();
+  const { auth, signedAuth } = useLoaderData<typeof loader>();
 
   return (
     <div>
@@ -32,6 +34,7 @@ export default function Dashboard() {
       </ul>
       <br />
       <pre>{JSON.stringify(auth, null, 2)}</pre>
+      <pre>{JSON.stringify(signedAuth, null, 2)}</pre>
     </div>
   );
 }
