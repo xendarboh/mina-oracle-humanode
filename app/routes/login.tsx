@@ -1,10 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 
 import type { AuthenticatedUser } from "~/auth.server";
 import { authenticator } from "~/auth.server";
 import { sessionStorage } from "~/session.server";
+import { FormBioAuth } from "~/ui/FormBioAuth";
 
 type LoaderData = {
   auth: AuthenticatedUser;
@@ -54,12 +55,7 @@ export default function Login() {
       {data.error && (
         <div className="font-bold text-red-500">{data.error?.message}</div>
       )}
-      <Form action="/auth/humanode" method="post">
-        <button className="rounded border border-gray-700 bg-gray-200 px-2 py-2 font-medium text-black hover:bg-gray-300">
-          Crypto-Biometric Authentication
-          <img src="/humanode-350x250.png" alt="" />
-        </button>
-      </Form>
+      <FormBioAuth />
     </div>
   );
 }
