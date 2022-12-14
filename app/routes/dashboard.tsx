@@ -1,40 +1,30 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { Link } from "@remix-run/react";
-import { useLoaderData } from "@remix-run/react";
+// import { useLoaderData } from "@remix-run/react";
 
 import { requireAuthenticatedUser } from "~/auth.server";
-import { getSignedBioAuth } from "~/mina.server";
+import { ButtonLink } from "~/ui/ButtonLink";
 
 export async function loader({ request }: LoaderArgs) {
   const auth = await requireAuthenticatedUser(request);
-  const signedAuth = await getSignedBioAuth(1, auth.id);
-  return { auth, signedAuth };
+  return { auth };
 }
 
 export default function Dashboard() {
-  const { auth, signedAuth } = useLoaderData<typeof loader>();
+  // const { auth } = useLoaderData<typeof loader>();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">
-        Welcome to the Dashboard... you auth'd user!
-      </h1>
+    <div className="flex flex-col items-center space-y-8 ">
+      <div className="flex flex-col items-center">
+        <h1 className="text-2xl font-bold">Mina x Humanode</h1>
+        <h1 className="text-1xl font-bold">Zero-Knowledge Oracle</h1>
+      </div>
+      <br />
+      <br />
+      <ButtonLink to="/logout">Logout</ButtonLink>
+      {/*
       <h3>humanode identifer = {auth.id}</h3>
-      <br />
-      <ul className="list-disc">
-        <li>
-          <Link to="/">home</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/logout">Logout</Link>
-        </li>
-      </ul>
-      <br />
       <pre>{JSON.stringify(auth, null, 2)}</pre>
-      <pre>{JSON.stringify(signedAuth, null, 2)}</pre>
+      */}
     </div>
   );
 }
