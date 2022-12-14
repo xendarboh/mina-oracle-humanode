@@ -49,16 +49,18 @@ export default function MinaHumanodeAuth() {
         <h1 className="text-2xl font-bold">Mina x Humanode</h1>
         <h1 className="text-1xl font-bold">Zero-Knowledge Oracle</h1>
       </div>
-      <div className="flex text-center">
-        Your crypto-biometric authorization of the data has been signed.
-        <br />
-        You may close this window and return to the requesting zkApp.
-      </div>
       {isAuthed || <FormBioAuth />}
       {bioAuth && (
-        <div className="rounded border border-gray-700 bg-gray-200 px-2 py-2 text-xs text-black">
-          <pre>{JSON.stringify(bioAuth, null, 2)}</pre>
-        </div>
+        <>
+          <div className="flex text-center">
+            Your crypto-biometric authorization of the data has been signed.
+            <br />
+            You may close this window and return to the requesting zkApp.
+          </div>
+          <div className="rounded border border-gray-700 bg-gray-200 px-2 py-2 text-xs text-black">
+            <pre>{JSON.stringify(bioAuth, null, 2)}</pre>
+          </div>
+        </>
       )}
       {isAuthed && (
         <div className="flex flex-row space-x-8">
