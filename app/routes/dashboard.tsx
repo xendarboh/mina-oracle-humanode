@@ -3,11 +3,11 @@ import { Link } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 
 import { requireAuthenticatedUser } from "~/auth.server";
-import { getSignedAuth } from "~/mina.server";
+import { getSignedBioAuth } from "~/mina.server";
 
 export async function loader({ request }: LoaderArgs) {
   const auth = await requireAuthenticatedUser(request);
-  const signedAuth = await getSignedAuth(1, auth.id);
+  const signedAuth = await getSignedBioAuth(1, auth.id);
   return { auth, signedAuth };
 }
 

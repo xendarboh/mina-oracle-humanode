@@ -3,26 +3,47 @@ import {
   Field,
   Poseidon,
   PrivateKey,
+  PublicKey,
   Signature,
   isReady,
 } from "snarkyjs";
+import invariant from "tiny-invariant";
 
-export async function getSignedAuth(_id: number, _bioAuthId: string) {
+import { cache } from "./cache.server";
+
+const TTL = Number(process.env.MINA_ORACLE_BIOAUTH_TTL) ?? 1000 * 60 * 10;
+
+export async function cacheBioAuth(id: string, data: any) {
+  cache.set(id, JSON.stringify(data), TTL);
+}
+
+export async function getCachedBioAuth(id: string): Promise<any | undefined> {
+  return cache.has(id) ? JSON.parse(cache.get(id) as string) : undefined;
+}
+
+// from snarky-bioauth library
+function payloadFromBase58(id: string): Field {
+  const publicKey = PublicKey.fromBase58(id);
+  return publicKey.x;
+}
+
+export async function getSignedBioAuth(_id: string, _bioAuthId: string) {
+  invariant(
+    process.env.MINA_ORACLE_PRIVATE_KEY,
+    "MINA_ORACLE_PRIVATE_KEY must be set"
+  );
+
   // wait for SnarkyJS to finish loading
   await isReady;
 
   // The private key of our account.
-  // When running locally the hardcoded key will be used.
-  const privateKey = PrivateKey.fromBase58(
-    process.env.PRIVATE_KEY ??
-      "EKFALuhuMgHMoxVb3mwKS3Zx5yL9kg5TawbBoQaDq6bWqNE2GGBP"
-  );
+  const privateKey = PrivateKey.fromBase58(process.env.MINA_ORACLE_PRIVATE_KEY);
 
   // Compute the public key associated with our private key
   const publicKey = privateKey.toPublicKey();
 
   // Define a Field with the value of the id
-  const id = Field(_id);
+  const id = Field(payloadFromBase58(_id));
 
   // Define a Field with the current timestamp
   const timestamp = Field(Date.now());
