@@ -11,6 +11,15 @@ services:
       context: ./
     ports:
       - "3000"
+    environment:
+      - AUTH_HUMANODE_CLIENT_ID=${AUTH_HUMANODE_CLIENT_ID}
+      - AUTH_HUMANODE_CLIENT_SECRET=${AUTH_HUMANODE_CLIENT_SECRET}
+      - AUTH_HUMANODE_URI_CALLBACK=${AUTH_HUMANODE_URI_CALLBACK}
+      - AUTH_HUMANODE_URI_ISSUER=${AUTH_HUMANODE_URI_ISSUER}
+      - AUTH_HUMANODE_URI_JWKS=${AUTH_HUMANODE_URI_JWKS}
+      - MINA_ORACLE_PRIVATE_KEY=${MINA_ORACLE_PRIVATE_KEY}
+      - MINA_ORACLE_BIOAUTH_TTL=${MINA_ORACLE_BIOAUTH_TTL}
+      - SESSION_SECRET=${SESSION_SECRET}
 
   auth:
     profiles: ["production"]
@@ -37,6 +46,7 @@ services:
     environment:
       - NODE_ENV=development
       - npm_config_cache=/tmp/npm_cache
+      - DEV_HACK_AUTHENTICATED_USER=${DEV_HACK_AUTHENTICATED_USER}
     command: >
       npm run dev
 
