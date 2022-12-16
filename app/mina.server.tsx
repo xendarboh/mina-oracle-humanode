@@ -43,7 +43,7 @@ export async function getSignedBioAuth(_id: string, _bioAuthId: string) {
   const publicKey = privateKey.toPublicKey();
 
   // Define a Field with the value of the id
-  const id = Field(payloadFromBase58(_id));
+  const payload = Field(payloadFromBase58(_id));
 
   // Define a Field with the current timestamp
   const timestamp = Field(Date.now());
@@ -52,10 +52,14 @@ export async function getSignedBioAuth(_id: string, _bioAuthId: string) {
   const bioAuthId = Poseidon.hash(Encoding.stringToFields(_bioAuthId));
 
   // Use our private key to sign an array of Fields containing the data
-  const signature = Signature.create(privateKey, [id, timestamp, bioAuthId]);
+  const signature = Signature.create(privateKey, [
+    payload,
+    timestamp,
+    bioAuthId,
+  ]);
 
   return {
-    data: { id, timestamp, bioAuthId },
+    data: { payload, timestamp, bioAuthId },
     signature: signature,
     publicKey: publicKey,
   };
