@@ -9,7 +9,7 @@ for details.
 
 ## What's under the hood
 
-- [Remix!](https://remix.run).
+- [Remix](https://remix.run)!
 - [o1-labs/snarkyjs](https://github.com/o1-labs/snarkyjs) Typescript/Javascript framework for zk-SNARKs and zkApps
 - Sybil-resistant proof of unique living Human with [HUMΔNODE](https://humanode.io/)
 - Authenticated session management with [Remix Auth](https://github.com/sergiodxa/remix-auth)
@@ -20,9 +20,9 @@ for details.
 
 ## Development
 
-Note: the example configuration values will work for local development. For
-production deployment, a custom OAuth2 client-id is needed from the Humanode
-team.
+Note: The example `AUTH_HUMANODE` configuration values will work for local
+development. For production deployment, a custom OAuth2 client-id is needed
+from the Humanode team.
 
 - Copy `env` config file from the example and customize:
 
