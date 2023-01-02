@@ -20,11 +20,13 @@
     "@remix-run/react": "^1.8.2",
     "@remix-run/serve": "^1.8.2",
     "jose": "^4.11.1",
+    "level": "^8.0.0",
     "node-cache": "^5.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-auth": "^3.4.0",
     "remix-auth-oauth2": "^1.5.0",
+    "snarky-smt": "github:zkHumans/snarky-smt#node14",
     "snarkyjs": "^0.7.3",
     "tiny-invariant": "^1.3.1"
   },
